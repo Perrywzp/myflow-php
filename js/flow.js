@@ -173,8 +173,11 @@ var flow = {
 						var name = 'To '+ed.text.attr('text')
 						//生成连线
 						that.makeline(op,ed,path,name,name);
-
+						
 						$.lineStart = 0;
+						//每次画完线以后就将当前状态切换回选择元素
+						that.lineUnbind();
+						$('.handle h4').html('状态：选择元素');
 					}
 				}
 			});
@@ -575,7 +578,6 @@ var flow = {
 		,init: function(){
 			$('.flow').width($(window).width()).height($(window).height());
 			var p = Raphael($('.flow')[0],$('.flow').width(),$('.flow').height());
-			
 			flow.canvas.can = p;
 		}
 	},
