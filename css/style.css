@@ -128,7 +128,7 @@ body{
 	position: absolute;
 	left: 0;
 	top: 60px;
-	min-width: 1366px;
+	min-width: 1024px;
 	min-height: 613px;
 	background: url(../img/bg.gif);
 	/*width: 700px;
@@ -137,7 +137,8 @@ body{
 .content{
 	position: absolute;
 	background-color: #fff;
-	border: 2px solid #666;
+	border: 2px solid #ccc;
+	border-radius:5px;
 	right: 50px;
 	top:100px;
 	padding: 0 15px 15px 15px;
