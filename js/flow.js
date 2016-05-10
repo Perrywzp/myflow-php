@@ -175,6 +175,9 @@ var flow = {
 						that.makeline(op,ed,path,name,name);
 
 						$.lineStart = 0;
+						// 画完线后恢复选择元素状态可避免乱连线的bug
+						that.lineUnbind();
+						$('.handle h4').html('状态：选择元素');
 					}
 				}
 			});
@@ -188,9 +191,10 @@ var flow = {
 			var text;
 			if(path.length>=3){
 				// l.text.attr({'x':parseInt(path[1].split(',')[0])+25,'y':parseInt(path[1].split(',')[1])-15});
-				text = flow.canvas.can.text(parseInt(path[1].split(',')[0])+25,parseInt(path[1].split(',')[1])-15,name).attr({cursor:'pointer'});
+// 				text = flow.canvas.can.text(parseInt(path[1].split(',')[0])+25,parseInt(path[1].split(',')[1])-15,name).attr({cursor:'pointer'});
+				text = flow.canvas.can.text(parseInt(path[1].split(',')[0])+25,parseInt(path[1].split(',')[1])-15,'').attr({cursor:'pointer'});
 			}else{
-				text = flow.canvas.can.text((parseInt(path[1].split(',')[0])+parseInt(path[0].split('M')[1].split(',')[0]))/2+25,(parseInt(path[1].split(',')[1])+parseInt(path[0].split(',')[1]))/2-15,name).attr({cursor:'pointer'});
+				text = flow.canvas.can.text((parseInt(path[1].split(',')[0])+parseInt(path[0].split('M')[1].split(',')[0]))/2+25,(parseInt(path[1].split(',')[1])+parseInt(path[0].split(',')[1]))/2-15,'').attr({cursor:'pointer'});
 			}
 			text.attrs.description = description||name;
 			text.attrs.condition = condition||{};
@@ -397,7 +401,7 @@ var flow = {
 							+'<a class="del" href="#">-</a>';
 			}
 			var html = '<div class="content" op="'+p.id+'">'
-							+'<h4>属性</h4>'
+							+'<h4>元素属性</h4>'
 							+'<div class="form">'
 								+'<div>'
 									+'<label for="name">显示</label>'
