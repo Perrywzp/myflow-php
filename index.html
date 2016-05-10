@@ -17,26 +17,37 @@
 		</div>
 		<div class="user">
 			<div class="function">
-				<div class="save">
-					<input class="btn btn-info" type="button" value="保存">
-				</div>
-				<!-- <div class="file">
-					<select name="file" id="file">
-						<option value="新建流程图">新建流程图</option>
-					</select>
+				<!-- <div class="dropdown">
+				    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				        <span>新建流程图</span>
+				        <span class="caret"></span>
+				    </button>
+				    <ul class="dropdown-menu name-menu" aria-labelledby="dropdownMenu1">
+				        <li data-flow=""><a href="#">新建流程图</a></li>
+				    </ul>
+				</div> -->
+				<div class="new">
+					<input class="btn" type="button" value="新建">
 				</div>
 				<div class="rename">
 					<input class="btn" type="button" value="重命名">
 				</div>
-				<div class="new">
-					<input class="btn" type="button" value="新建">
+				<div class="save">
+					<input class="btn btn-info" type="button" value="保存">
+				</div>
+				
+				<div class="file">
+					<select name="file" id="file">
+						<option data-flow='{"0":{"type":"circle","origin":"start","text":{"name":"事件流程配置","description":"开始","condition":{}},"position":{"x":376,"y":96}},"1":{"type":"rect","origin":"task","text":{"name":"事件基础属性","description":"任务","condition":{}},"position":{"x":530,"y":66}},"2":{"type":"circle","origin":"end","text":{"name":"结束","description":"结束","condition":{}},"position":{"x":1184,"y":364}},"3":{"type":"rect","origin":"status","text":{"name":"事件源配置","description":"状态","condition":{}},"position":{"x":952,"y":65}},"4":{"type":"rect","origin":"status","text":{"name":"事件联动配置","description":"状态","condition":{}},"position":{"x":1123,"y":64}},"5":{"type":"rect","origin":"status","text":{"name":"选择事件源","description":"状态","condition":{}},"position":{"x":741,"y":66}},"6":{"type":"path","origin":"line","text":{"name":"","description":"To 选择事件源","condition":{}},"path":"M655,96L736,96","op":1,"ed":5},"7":{"type":"path","origin":"line","text":{"name":"","description":"To 事件源配置","condition":{}},"path":"M866,96L947,95","op":5,"ed":3},"8":{"type":"path","origin":"line","text":{"name":"","description":"To 事件联动配置","condition":{}},"path":"M1077,95L1118,94","op":3,"ed":4},"9":{"type":"path","origin":"line","text":{"name":"","description":"To 事件基础属性","condition":{}},"path":"M421.05967569212567,96L525,96","op":0,"ed":1},"10":{"type":"path","origin":"line","text":{"name":"","description":"To 结束","condition":{}},"path":"M1183,129L1184,319","op":4,"ed":2}}' value="事件配置流程图">事件配置流程图</option>
+						<option data-flow='{"0":{"type":"circle","origin":"start","text":{"name":"开始","description":"求输人的两个数中的最大值","condition":{}},"position":{"x":789,"y":64}},"1":{"type":"rect","origin":"branch","text":{"name":"a>b","description":"分支","condition":{}},"position":{"x":758.2375900532359,"y":277.6396103067893}},"2":{"type":"rect","origin":"task","text":{"name":"输入a,b","description":"任务","condition":{}},"position":{"x":728,"y":154}},"3":{"type":"rect","origin":"status","text":{"name":"输出a","description":"状态","condition":{}},"position":{"x":591,"y":386}},"4":{"type":"rect","origin":"status","text":{"name":"输出b","description":"状态","condition":{}},"position":{"x":865,"y":388}},"5":{"type":"circle","origin":"end","text":{"name":"结束","description":"结束","condition":{}},"position":{"x":780,"y":596}},"6":{"type":"path","origin":"line","text":{"name":"","description":"To 输入a,b","condition":{}},"path":"M789,109L788,149","op":0,"ed":2},"7":{"type":"path","origin":"line","text":{"name":"","description":"To a>b","condition":{}},"path":"M788,219L788.2375900730223,260.2132034320156","op":2,"ed":1},"8":{"type":"path","origin":"line","text":{"name":"","description":"To 状态","condition":{}},"path":"M835.6639969330222,307.63961029201556L925.5,305L925,383","op":1,"ed":4},"9":{"type":"path","origin":"line","text":{"name":"","description":"To 状态","condition":{}},"path":"M740.8111832130223,307.63961029201556L651,307.5L651,381","op":1,"ed":3},"10":{"type":"path","origin":"line","text":{"name":"","description":"To 结束","condition":{}},"path":"M711,446L739.9403243078742,556","op":3,"ed":5},"11":{"type":"path","origin":"line","text":{"name":"","description":"To 结束","condition":{}},"path":"M865,448L820.0596756921258,556","op":4,"ed":5}}' value="算法流程图">算法流程图</option>
+					</select>
 				</div>
 				<div class="delete">
 					<input class="btn" type="button" value="删除">
-				</div> -->
-				<div class="clear">
+				</div> 
+				<!-- <div class="clear">
 					<input class="btn" type="button" value="清空">
-				</div>
+				</div> -->
 			</div>
 			<!--<div class="info">-->
 				<!--<div class="dropdown">-->

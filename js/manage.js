@@ -35,7 +35,7 @@ var m = {
             // +'<input type="button" class="btn btn-warning btn-large" id="register" value="注册"/>'
             + '<a class="span2" href="#">没有账号？<br>现在去注册-></a>' + '<input type="button" style="margin-left:0;" class="btn btn-success btn-large span2" id="login" value="登陆"/>' + '</div>' + '</div>';
         that.mAlert(html);
-        $('.myalert .cont .butt #login').bind('click', function() {
+        $('.myalert .cont .butt #login').off().on('click', function() {
             // $.getJSON(that.url + 'l&username=' + $('.myalert .cont .inp #username').val() + '&password=' + $('.myalert .cont .inp #password').val() + '&c=?', function(json) {
             //     // console.log('11');
             //     if (json && json['nickname']) {
@@ -45,7 +45,7 @@ var m = {
             //     }
             // });
         });
-        $('.myalert .cont .butt a').bind('click', function() {
+        $('.myalert .cont .butt a').off().on('click', function() {
             that.register();
 
         });
@@ -71,7 +71,7 @@ var m = {
         $('.myalert')[0].style.height = '580px';
         $('.myalert')[0].style.width = '600px';
         $('.myalert').show(500);
-        $('.myalert .cont .butt #register').bind('click', function() {
+        $('.myalert .cont .butt #register').off().on('click', function() {
             if (!$('.myalert .cont .inp #username').val()) {
                 alert('请输入用户名！');
             } else if (!$('.myalert .cont .inp #password').val()) {
@@ -97,7 +97,7 @@ var m = {
                 })
             }
         });
-        $('.myalert .cont .butt #cancle').bind('click', function() {
+        $('.myalert .cont .butt #cancle').off().on('click', function() {
             $('.myalert')[0].style.height = '350px';
             $('.myalert')[0].style.width = '500px';
             that.mAlertHide();
@@ -120,7 +120,9 @@ var m = {
     save_1: function() {
             var that = this;
             var dd = that.getData();
-            alert(dd);
+            $('.top .user .function .file #file option:selected').attr("data-flow",dd);
+            console.log(dd);
+            // alert(dd);
             // $.post(that.url + 'sv', { name: flow.canvas.name, data: dd }, function(result) {
             //     // console.log(result);
             //     if ($.trim(result) == "'yes'") {
@@ -133,7 +135,7 @@ var m = {
         var that = this;
         var html = '<div class="cont">' + '<div class="inp">' + '<label class="span1" for="name">名称</label>' + '<input class="span3" type="text" id="name" value="' + $('.top .user .function .file #file').val() + '"/>' + '</div>' + '<div class="butt">' + '<input type="button" class="btn btn-success btn-large" id="confirm" value="确定"/>' + '<input type="button" class="btn btn-large" id="cancle" value="取消"/>' + '</div>' + '</div>';
         that.mAlert(html);
-        $('.myalert .cont .butt #confirm').bind('click', function() {
+        $('.myalert .cont .butt #confirm').off().on('click', function() {
             var exist = 0;
             $('.top .user .function .file #file option').each(function(i, u) {
                 if (u.value == $('.myalert .cont .inp #name').val()) {
@@ -152,7 +154,7 @@ var m = {
                 });
             }
         });
-        $('.myalert .cont .butt #cancle').bind('click', function() {
+        $('.myalert .cont .butt #cancle').off().on('click', function() {
             $('.top .user .function .save input').removeAttr('disabled');
             that.mAlertHide();
         });
@@ -160,30 +162,42 @@ var m = {
     clearCanvas:function(){
     	flow.canvas.can.clear();
     },
-    changeFile: function(name) {
+    changeFile: function(name,data) {
         var that = this;
-        // $.getJSON(that.url + 'gf&name=' + name + '&c=?', function(json) {
+        var json = data ? JSON.parse(data) : "";
+        flow.canvas.can.clear();
+        flow.canvas.name = name;
+        $('.top .user .function .file #file').val(name);
+        if(json){
+                $.each(json, function(i, u) {
+                    if (u['type'] == 'path') {
+                        flow.main.makeline(flow.canvas.can.getById(json[u['op']]['id']), flow.canvas.can.getById(json[u['ed']]['id']), u['path'], u['text']['name'], u['text']['description'], u['text']['condition']);
+                    } else {
+                        var re = flow.main.makeFlow(u['origin'], u['position']['x'], u['position']['y'], u['text']['name'], u['text']['description'], u['text']['condition']);
+                        u['id'] = re.id;
+                    }
+                });
+        }else{
+          // $.getJSON(that.url + 'gf&name=' + name + '&c=?', function(json) {
         //     // console.log(json['name'])
         //     if (json) {
-        //         flow.canvas.name = name;
-        //         $('.top .user .function .file #file').val(name);
-        //         flow.canvas.can.clear();
-        //         $.each(json, function(i, u) {
-        //             if (u['type'] == 'path') {
-        //                 flow.main.makeline(flow.canvas.can.getById(json[u['op']]['id']), flow.canvas.can.getById(json[u['ed']]['id']), u['path'], u['text']['name'], u['text']['description'], u['text']['condition']);
-        //             } else {
-        //                 var re = flow.main.makeFlow(u['origin'], u['position']['x'], u['position']['y'], u['text']['name'], u['text']['description'], u['text']['condition']);
-        //                 u['id'] = re.id;
-        //             }
-        //         })
+        //         
         //     }
-        // });
+        // });  
+        }
+        
     },
     rename: function() {
         var that = this;
-        var html = '<div class="cont">' + '<div class="inp">' + '<label class="span1" for="name">名称</label>' + '<input class="span3" type="text" id="name" value="' + $('.top .user .function .file #file').val() + '"/>' + '</div>' + '<div class="butt">' + '<input type="button" class="btn btn-success btn-large" id="confirm" value="确定"/>' + '<input type="button" class="btn btn-large" id="cancle" value="取消"/>' + '</div>' + '</div>'
+        var html = '<div class="cont">' + '<div class="inp">' + 
+                '<label class="span1" for="name">名称</label>' + 
+                '<input class="span3" type="text" id="name" value="' + 
+                $('.top .user .function .file #file').val() + '"/>' + 
+                '</div>' + '<div class="butt">' + 
+                '<input type="button" class="btn btn-success btn-large" id="confirm" value="确定"/>' + 
+                '<input type="button" class="btn btn-large" id="cancle" value="取消"/>' + '</div>' + '</div>';
         that.mAlert(html);
-        $('.myalert .cont .butt #confirm').bind('click', function() {
+        $('.myalert .cont .butt #confirm').off().on('click', function() {
             var exist = 0;
             $('.top .user .function .file #file option').each(function(i, u) {
                 if (u.value == $('.myalert .cont .inp #name').val()) {
@@ -192,6 +206,12 @@ var m = {
             });
             if (exist == 0 || confirm('您更改的名字与您其他文件的名字重复\n是否确定覆盖之前的文件？')) {
                 var nm = $('.myalert .cont .inp #name').val();
+
+
+                $('.top .user .function .save input').removeAttr('disabled');
+                flow.canvas.name = $('.myalert .cont .inp #name').val();
+                $('.top .user .function .file #file').find("option:selected").text(flow.canvas.name).val(flow.canvas.name);
+                that.mAlertHide();
                 // $.getJSON(that.url + 'rn&oldname=' + flow.canvas.name + '&newname=' + nm + '&c=?', function(result) {
                 //     if (result == 'yes') {
                 //         $('.top .user .function .save input').removeAttr('disabled');
@@ -203,23 +223,24 @@ var m = {
                 // });
             }
         });
-        $('.myalert .cont .butt #cancle').bind('click', function() {
+        $('.myalert .cont .butt #cancle').off().on('click', function() {
             that.mAlertHide();
         });
 
     },
     newFile: function() {
         var that = this;
-        that.save_1();
+        // that.save_1();
         flow.canvas.name = '新建流程图' + ($('.top .user .function .file #file option').length + 1);
-        $('.top .user .function .file #file').prepend('<option value="' + flow.canvas.name + '">' + flow.canvas.name + '</option>');
+        $('.top .user .function .file #file').prepend('<option data-flow="{}" value="' + flow.canvas.name + '">' + flow.canvas.name + '</option>');
         $('.top .user .function .file #file option')[0].selected = true;
         flow.canvas.can.clear();
-
     },
     delFile: function() {
         var that = this;
         if (confirm('您将删除此流程图所有的东西\n是否确定删除？')) {
+             $('.top .user .function .file #file option:selected').remove();
+            that.changeFile($('.top .user .function .file #file').val() ,$('.top .user .function .file #file option:first').attr("data-flow"));
             // $.getJSON(that.url + 'dl&name=' + flow.canvas.name + '&c=?', function(json) {
             //     if (json == 'yes') {
             //         $('.top .user .function .file #file option:selected').remove();
@@ -242,7 +263,7 @@ var m = {
         var iframe = $('.myalert iframe').contents().find('body');
         iframe.html(html2);
         iframe[0].style.background = 'none';
-        iframe.find('form .butt #confirm').bind('click', function() {
+        iframe.find('form .butt #confirm').off().on('click', function() {
             var nn = iframe.find('form .inp input[type="file"]').val().split('\\');
             var name = nn[nn.length - 1].split('.')[0];
             // $.getJSON(that.url + 'cn&name=' + name + '&c=?', function(json) {
@@ -272,7 +293,7 @@ var m = {
             // });
 
         });
-        $('.myalert .cont .butt #cancle').bind('click', function() {
+        $('.myalert .cont .butt #cancle').off().on('click', function() {
             that.mAlertHide();
         });
     },
@@ -325,7 +346,7 @@ var m = {
         var that = this;
 
         //保存按钮绑定
-        $('.top .user .function .save input').bind('click', function() {
+        $('.top .user .function .save input').off().on('click', function() {
             // 验证此流程图是否已经存在
             that.save_1();
             // $.getJSON(that.url + 'cn&name=' + $('.top .user .function .file #file').val() + '&c=?', function(json) {
@@ -340,47 +361,56 @@ var m = {
             // });
         });
         // 下拉列表绑定
-        $('.top .user .function .file #file').bind('change', function() {
+        $('.top').on('click change', '#file',function() {
             // console.log($(this).val())
-            if (that.getData().length > 2)
-                that.save_1();
-            that.changeFile($(this).val());
+            // if (that.getData().length > 2){
+            flow.main.unfocus();
+            $('.content').remove();
+            that.changeFile($(this).val(),$(this).find("option:selected").attr("data-flow"));
+            // }
         });
 
-        $('.top .user .function .rename input').bind('click', function() {
+        $('.top .user .function .rename input').off().on('click', function() {
             that.rename();
         });
-        $('.top .user .function .new input').bind('click', function() {
+        $('.top .user .function .new input').off().on('click', function() {
             that.newFile();
         });
-        $('.top .user .function .delete input').bind('click', function() {
+        $('.top .user .function .delete input').off().on('click', function() {
             that.delFile();
         });
-        $('.top .user .function .clear input').bind('click', function() {
-            that.clearCanvas();
-        });
-        $('.top .user .info').bind('mouseover', function() {
+        $('.top .user .info').off().on('mouseover', function() {
             $('.top .user .info .dropdown .dropdown-menu')[0].style.display = 'block';
         });
-        $('.top .user .info').bind('mouseout', function() {
+        $('.top .user .info').off().on('mouseout', function() {
             $('.top .user .info .dropdown .dropdown-menu')[0].style.display = 'none';
         });
-        $('.top .user .info li a').bind('click', function() {
+        $('.top .user .info li a').off().on('click', function() {
             $('.top .user .info .dropdown .dropdown-menu')[0].style.display = 'none';
         });
-        $('.top .user .info #logout').bind('click', function() {
+        $('.top .user .info #logout').off().on('click', function() {
             that.logout();
         });
-        $('.top .user .info #download').bind('click', function() {
+        $('.top .user .info #download').off().on('click', function() {
             that.download();
         });
-        $('.top .user .info #upload').bind('click', function() {
+        $('.top .user .info #upload').off().on('click', function() {
             that.upload();
         });
+    },
+    /**
+     * [triggerFlow description]
+     * @author 王志佩
+     * @date   2016-05-10
+     * @return {[type]}   [description]
+     */
+    triggerFlow:function(){
+        $(".top .file #file option:first").trigger('click');
     },
     init: function() {
         this.checkuser();
         this.functionBind();
+        this.triggerFlow();
     }
 };
 m.init();

@@ -33,23 +33,23 @@ var flow = {
 		,makeFlow: function(type,x,y,name,description,condition){
 			var that = this;
 			if( type == 'start'){
-				var re = flow.canvas.can.circle(x,y,30).attr({fill: '#E0F1D0', stroke: "#03689a", cursor: "move"});
+				var re = flow.canvas.can.circle(x,y,40).attr({fill: '#E0F1D0', stroke: "#03689a", cursor: "move"});
 				var text = flow.canvas.can.text(x,y,name).attr({cursor:'pointer'});
 			}else if(type == 'end'){
-				var re = flow.canvas.can.circle(x,y,30).attr({fill: '#FFCCCC', stroke: "#03689a", cursor: "move"});
+				var re = flow.canvas.can.circle(x,y,40).attr({fill: '#FFCCCC', stroke: "#03689a", cursor: "move"});
 				var text = flow.canvas.can.text(x,y,name).attr({cursor:'pointer'});
 			}else if(type == 'branch'){
 				// var re = flow.canvas.can.rect((y-x)/Math.SQRT2,(y-x)/Math.SQRT2+Math.SQRT2*x,50,50,5).attr({fill: '#F4F4CC', stroke: "#03689a", cursor: "move"});
-				var re = flow.canvas.can.rect(x,y,50,50,5).attr({fill: '#F4F4CC', stroke: "#03689a", cursor: "move"});
+				var re = flow.canvas.can.rect(x,y,60,60,6).attr({fill: '#F4F4CC', stroke: "#03689a", cursor: "move"});
 				re.rotate(45);
 				re.attrs.rex = x
 				,re.attrs.rey = y;
-				var text = flow.canvas.can.text(x+25,y+25,name).attr({cursor:'pointer'});
+				var text = flow.canvas.can.text(x+30,y+30,name).attr({cursor:'pointer'});
 			}else{
-				var re = flow.canvas.can.rect(x,y,100,50,5).attr({fill: '#f6f7ff', stroke: "#03689a", cursor: "move"});
+				var re = flow.canvas.can.rect(x,y,120,60,6).attr({fill: '#f6f7ff', stroke: "#03689a", cursor: "move"});
 				re.attrs.rex = x
 				,re.attrs.rey = y;
-				var text = flow.canvas.can.text(x+50,y+25,name).attr({cursor:'pointer'});
+				var text = flow.canvas.can.text(x+60,y+30,name).attr({cursor:'pointer'});
 			}
 			text.attrs.description = description||name;
 			text.attrs.condition = condition||{};
@@ -567,8 +567,8 @@ var flow = {
 				flow.canvas.lp.length = 0;
 			})
 			
-		}
-		,init: function(){
+		},
+		init: function(){
 			this.bind();
 			this.flowClick();
 		}
@@ -588,5 +588,4 @@ var flow = {
 		this.main.init();
 	}
 };
-
 flow.init();
